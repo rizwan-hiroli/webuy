@@ -14,7 +14,7 @@
                         </div>
                     @endif
                     @foreach($carts as $cart)
-                        <div class="card" >
+                        <div class="card" id="div-{{$cart->id}}">
                           <img src="{{$cart->image}}" style="height:200px" class="card-img-top w-100" alt="...">
                           <div class="card-body">
                             <div class="row">
@@ -48,18 +48,13 @@
             url: '/remove-cart',
 
             success: function (response) {
-                // $('.close').trigger('click');
-                $('#loader').hide();
-                $('.error').empty();
-                $("#contact_form_home").trigger("reset");
-                $('#homeContactusSuccessMessage').show();
+                
+                $("#div-"+productId).fadeOut(300, function() { $(this).remove(); });
 
             },
 
             error: function (response) {
-                $('#loader').hide();
-                $('#homeContactusSuccessMessage').hide();
-                $('#modalContactusSuccessMessage').hide();
+                
             }
         });
 

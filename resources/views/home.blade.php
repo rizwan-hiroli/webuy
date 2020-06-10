@@ -16,13 +16,14 @@
                     
                     @foreach($products as $product)
                         <div class="card" >
-                          <img src="{{$product->image}}" style="height:200px" class="card-img-top w-100" alt="...">
+                          <img src="/uploads/{{$product->image}}" style="height:200px" class="card-img-top w-100" alt="...">
                           <div class="card-body">
                             <div class="row">
                                 <p class="card-text col-10">{{$product->description}}</p>
                                 &nbsp;<b><p class="card-text float-right">₹{{$product->price}}</p></b>
                             </div>
-                            <button class="btn btn-sm btn-primary cart-button" data-id="{{$product->id}}">Add to cart</button></td>
+                            <button class="btn btn-sm btn-primary cart-button d-block" data-id="{{$product->id}}" id="button-{{$product->id}}">Add to cart</button>
+                            <div class="card-text d-none" id="cart-{{$product->id}}">Added To Cart</div>
                           </div>
                         </div></br>
                     @endforeach
@@ -52,10 +53,8 @@
             type: 'post',
             url: '/cart',
             success: function (response) {
-                $('#loader').hide();
-                $('.error').empty();
-                $("#contact_form_home").trigger("reset");
-                $('#homeContactusSuccessMessage').show();
+                $('#cart-'+productId).addClass('d-block').removeClass('d-none');
+                $('#button-'+productId).addClass('d-none').removeClass('d-block');
 
             },
             error: function (response) {

@@ -73,7 +73,9 @@ class ProductController extends Controller
     	$cover = $request->file('image');
     	$extension = $cover->getClientOriginalExtension();
     	\Storage::disk('public')->put($cover->getFilename().'.'.$extension,  \File::get($cover));
-        $product = Product::create($request->all());
+
+        $fileName = $cover->getFilename().'.'.$extension;
+        $product = Product::create(array_merge($request->except('image'),['image'=>$fileName]));
         return response()->json(['sucess'=>'New product added.'],200);
     }
 
